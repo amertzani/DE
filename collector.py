@@ -336,5 +336,5 @@ def init_collectors(self):
   if self.framework == 'RTSI_rule_reason':
     self.era_1 = DataCollector(
       model_reporters={"General Population Rules":"general_population_rules_dict", "Optimal Agent's Rules":"optimal_rules_dict"}) 
-    self.era_1 = DataCollector(
+    self.era_2 = DataCollector(
       model_reporters={"GenPop-Inst EUDistance":"genpop_inst_EU", "OptAgent-Inst EUDistance":"optimal_inst_EU"})

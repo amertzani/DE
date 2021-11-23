@@ -131,7 +131,7 @@ print(SWSFmodel.general_population_rules_dict)
 print(SWSFmodel.optimal_rules_dict)
 print(SWSFmodel.ilc_weights)
 
-# m_35 = SWSFmodel.dc_2.get_model_vars_dataframe()
+# m_35 = SWSFmodel.era_1.get_model_vars_dataframe()
 # m_35.head(n=1500)
 
 # m_36 = SWSFmodel.datacollector_1.get_agent_vars_dataframe()

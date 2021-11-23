@@ -40,7 +40,7 @@ from lpg_functions import eval as lpg_eval
 from lpg_functions import oracle_upd as lpg_oupd
 from lpg_functions import inst_upd as lpg_iupd
 from lpg_functions import ag_funct as lpg_aupd
-import discovery as disco
+from next_years import discovery as disco
 
 # from test import blah1 as bl1
 
