@@ -40,6 +40,8 @@ from lpg_functions import eval as lpg_eval
 from lpg_functions import oracle_upd as lpg_oupd
 from lpg_functions import inst_upd as lpg_iupd
 from lpg_functions import ag_funct as lpg_aupd
+import discovery as disco
+
 # from test import blah1 as bl1
 
 
@@ -135,13 +137,6 @@ def Oracle6(purpose, node, model, nodes_opinion, nodes_rule, knowledge_codificat
   elif (purpose == 'update_time'):
     print('hallo')
 
-
-def compute_knowledge_EUdistance(model):
-  model.genpop_inst_EU = hp.euclidean_distance(model.general_population_rules_dict,model.ilc_weights)
-  model.optimal_inst_EU = hp.euclidean_distance(model.general_population_rules_dict,model.optimal_rules_dict)
-
-"""##Model and Agents"""
-
 class Agent(Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
@@ -226,6 +221,8 @@ class Agent(Agent):
         self.model.prob_SoP[self.unique_id] = 0
         self.model.prob_SoK[self.unique_id] = 0
         gen.init_PL_helpers_agent(self)
+        if (self.model.framework == 'RTSI_rule_reason'):
+          disco.init_disco_avars(self)
 
     def step(self):
         #SELF-REFLECTION TO AGENT
@@ -347,11 +344,7 @@ class Model(Model):
           self.nodes_rule = second_nodes
           inst_weights = gen.generate_rule_weights_equal(institutional_pool_rules)
         if (self.framework == 'RTSI_rule_reason'): 
-          self.general_population_rules_dict = {'lc1':1}  
-          self.optimal_rules_dict = {'lc1':1}  
-          self.genpop_inst_EU = 1 #euclidean_distance(model.general_population_rules_dict,model.ilc_weights)
-          self.optimal_inst_EU = 1 #euclidean_distance(model.general_population_rules_dict,model.optimal_rules_dict)          
-          #compute_knowledge_EUdistance(self)
+          disco.init_disco_mvars(self)
         collector.init_collectors(self)  
 
     def round_updates(self,to_be_added,mode,generated_resources,rules_2_endorse,weights_2_endorse):
@@ -365,7 +358,7 @@ class Model(Model):
           else:
             lpg_rupd.restart_rules(self,to_be_added)
         if (self.framework == 'RTSI_rule_reason'):
-          lpg_rupd.compute_avg_rules_discovery(self)
+          disco.compute_avg_rules_discovery(self)
         
     def participation(self,n_births,n_deaths):
         sorted_all_degree =  {k: v for k, v in sorted(self.all_degree.items(), key=lambda item: item[1], reverse=True)} #sort - largest first
